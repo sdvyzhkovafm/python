@@ -1,0 +1,9 @@
+LICENSE
+README.md
+pyproject.toml
+src/evample_package_yuliia_sdvyzhkova.egg-info/PKG-INFO
+src/evample_package_yuliia_sdvyzhkova.egg-info/SOURCES.txt
+src/evample_package_yuliia_sdvyzhkova.egg-info/dependency_links.txt
+src/evample_package_yuliia_sdvyzhkova.egg-info/top_level.txt
+src/example_package_yuliia_sdvyzhkova/__init__.py
+src/example_package_yuliia_sdvyzhkova/example.py
