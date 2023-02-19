@@ -4,8 +4,9 @@ import shutil
 import os
 
 from operator import add
-from pyspark import SparkContext, RDD, SparkConf
-from pyspark.sql import DataFrame
+
+from pyspark import SparkContext, RDD
+from pyspark.sql import DataFrame, SparkSession
 
 __all__ = ['parse_args', 'extract_text_data', 'extract_csv_data', 'transform_data', 'write_data_to_text']
 
@@ -23,8 +24,18 @@ def extract_text_data(spark: SparkContext, input_path: str) -> RDD:
     return lines
 
 
-def extract_csv_data(spark: SparkContext, input_path: str) -> DataFrame:
-    csv_data = spark.read.option("header", True).option("delimiter", "\t").csv(input_path)
+def extract_csv_data(ss: SparkSession, input_path: str):
+    lines = ss.read.csv(input_path)\
+        .withColumnRenamed("_c1", "product_id")\
+        .withColumnRenamed("_c2", "user_id")
+    csv_data = (
+        lines
+        .rdd
+        .map(lambda row: (row[2], row[1]))
+        .collect()
+    )
+    del csv_data[0]
+
     return csv_data
 
 
