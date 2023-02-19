@@ -6,13 +6,10 @@ import warnings
 from operator import add
 from typing import List
 
-import complete as complete
 from pyspark import SparkContext, RDD
-from pyspark.sql import SparkSession, DataFrame
-import pyspark.sql.functions as F
+from pyspark.sql import SparkSession
 from itertools import combinations
 from common.helper import write_data_to_text, extract_csv_data
-from common.spark import start_spark
 
 number_cores = 2
 memory_gb = 4

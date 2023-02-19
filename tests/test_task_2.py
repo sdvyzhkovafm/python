@@ -1,8 +1,6 @@
 import unittest
 
-from pyspark import SparkConf, SparkContext, RDD
-from pyspark.sql import SparkSession, DataFrame
-# from etl import task_2
+from pyspark import SparkConf, SparkContext
 from etl.task_2 import get_all_purchased_products_pairs, get_pairs_purchased_together
 import warnings
 

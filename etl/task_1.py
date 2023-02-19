@@ -11,6 +11,25 @@ from pyspark import RDD
 from common.spark import start_spark
 from common.helper import *
 
+
+def main():
+    spark = start_spark(
+        app_name='Max Word Count',
+        master="local[2]",
+        spark_config={
+            "spark.driver.host": "localhost"
+        })
+
+    input_path = '../input/Iliad.txt'
+    out_path = '../output/numbers_60_of_max'
+    text = extract_text_data(spark, input_path)
+    words = transform_data(text)
+    co_count = load_co_count(words)
+    max_co_number = load_max_co_count(words)
+    write_data_to_text(load_60_of_max(words), out_path)
+    spark.stop()
+
+
 def load_co(words: RDD) -> RDD:
     co_words = (
         words
@@ -20,6 +39,7 @@ def load_co(words: RDD) -> RDD:
         .map(lambda x: (x[1], x[0]))
     )
     return co_words
+
 
 def load_co_count(words: RDD) -> int:
     co_count = load_co(words).count()
@@ -50,19 +70,5 @@ def load_60_of_max(counts: RDD) -> RDD:
     return result
 
 
-spark = start_spark(
-    app_name='Max Word Count',
-    master="local[2]",
-    spark_config={
-        "spark.driver.host": "localhost"
-    })
-input_path = '../input/Iliad.txt'
-out_path = '../output/numbers_60_of_max'
-text = extract_text_data(spark, input_path)
-words = transform_data(text)
-co_count = load_co_count(words)
-max_co_number = load_max_co_count(words)
-write_data_to_text(load_60_of_max(words), out_path)
-spark.stop()
-
-
+if __name__ == '__main__':
+    main()
